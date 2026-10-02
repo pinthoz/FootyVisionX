@@ -1,0 +1,50 @@
+# The API image for AWS Lambda. Same app, same uvicorn command as the Dockerfile; the
+# Lambda Web Adapter extension turns each Lambda invocation into a plain HTTP request
+# to localhost:8000, so the FastAPI code needs no Lambda-specific entry point.
+FROM python:3.11-slim
+
+# The adapter runs as a Lambda extension: anything in /opt/extensions starts alongside
+# the function and relays requests to the port below.
+COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.9.1 /lambda-adapter /opt/extensions/lambda-adapter
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_NO_CACHE_DIR=1 \
+    OMP_NUM_THREADS=1 \
+    OPENBLAS_NUM_THREADS=1 \
+    MKL_NUM_THREADS=1 \
+    AWS_LWA_PORT=8000 \
+    AWS_LWA_READINESS_CHECK_PATH=/health \
+    # The fine-tuned embedder's base model ships in the image (models/hf below) and is
+    # read from there alone: Lambda has no Hugging Face login, and the model is gated.
+    HF_HOME=/app/models/hf \
+    HF_HUB_OFFLINE=1 \
+    TRANSFORMERS_OFFLINE=1
+
+WORKDIR /app
+
+# The fine-tuned retriever, as FootyVision runs it locally: the LoRA adapter loaded by
+# sentence-transformers on top of google/embeddinggemma-300m. Same library versions as
+# the environment that built the index, so queries land in the same vector space.
+# CPU-only torch: the CUDA build is ~2GB larger and Lambda has no GPU.
+RUN pip install --upgrade pip \
+    && pip install torch==2.6.0 --index-url https://download.pytorch.org/whl/cpu \
+    && pip install sentence-transformers==6.0.1 peft==0.20.0 transformers==5.16.1
+
+# The models change far less often than the code, so they come before it: a code change
+# rebuilds only the layers below and leaves these 1.3GB cached.
+COPY models/hf ./models/hf
+COPY models/embeddinggemma-footyvision ./models/embeddinggemma-footyvision
+COPY models/talent ./models/talent
+COPY models/value ./models/value
+COPY models/spatial ./models/spatial
+
+COPY pyproject.toml README.md ./
+COPY src ./src
+# Editable install: the code resolves models/ relative to its own path (/app/models).
+# boto3 reads Secrets Manager (footyvision/aws_secrets.py).
+RUN pip install -e . boto3
+
+# No `init-db` here, unlike the Dockerfile: on Lambda this would run on every cold
+# start. Migrations run once per deploy instead.
+CMD ["uvicorn", "footyvision.api.main:app", "--host", "0.0.0.0", "--port", "8000"]

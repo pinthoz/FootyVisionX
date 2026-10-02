@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="120" height="120" role="img" aria-label="FootyVision">
+  <!-- The corner arc of a pitch, with the flag as a dot. Same mark as the app
+       (frontend/web/app/components/Logo.tsx), with the theme colours resolved so it
+       renders identically on GitHub's light and dark themes. -->
+  <rect width="24" height="24" rx="5" fill="#0a1710"/>
+  <g fill="none" stroke="#e9f0e6" stroke-width="1.5" stroke-linecap="round">
+    <!-- Touchlines meeting at the corner. -->
+    <path d="M5 18.5V4.5"/>
+    <path d="M5 18.5h15"/>
+    <!-- The corner arc, centred on the flag. -->
+    <path d="M5 10.9a7.6 7.6 0 0 1 7.6 7.6"/>
+  </g>
+  <!-- The flag itself: the one place the mark carries colour. -->
+  <circle cx="5" cy="18.5" r="2" fill="#d9ab48"/>
+</svg>

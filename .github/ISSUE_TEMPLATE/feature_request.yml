@@ -1,0 +1,26 @@
+name: Feature request
+description: Suggest a capability or improvement.
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe the scouting/analysis question that is hard to answer today.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+    validations:
+      required: true
+
+  - type: textarea
+    id: data
+    attributes:
+      label: Data requirements
+      description: >
+        Which source would this need? Note that StatsBomb Open Data covers only one full
+        domestic season — see the "Data reality" section of the README.

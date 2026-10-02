@@ -1,0 +1,70 @@
+[
+  {
+    "feature": "clearances_per90",
+    "mean_abs_shap": 0.771
+  },
+  {
+    "feature": "pressures_per90",
+    "mean_abs_shap": 0.7462
+  },
+  {
+    "feature": "progressive_passes_per90",
+    "mean_abs_shap": 0.6076
+  },
+  {
+    "feature": "tackles_per90",
+    "mean_abs_shap": 0.4514
+  },
+  {
+    "feature": "blocks_per90",
+    "mean_abs_shap": 0.3954
+  },
+  {
+    "feature": "dribbles_per90",
+    "mean_abs_shap": 0.3806
+  },
+  {
+    "feature": "shots_per90",
+    "mean_abs_shap": 0.3774
+  },
+  {
+    "feature": "xg_per90",
+    "mean_abs_shap": 0.3735
+  },
+  {
+    "feature": "ball_recoveries_per90",
+    "mean_abs_shap": 0.2954
+  },
+  {
+    "feature": "passes_completed_per90",
+    "mean_abs_shap": 0.2306
+  },
+  {
+    "feature": "dribbles_completed_per90",
+    "mean_abs_shap": 0.1919
+  },
+  {
+    "feature": "progressive_carries_per90",
+    "mean_abs_shap": 0.1744
+  },
+  {
+    "feature": "carries_per90",
+    "mean_abs_shap": 0.1127
+  },
+  {
+    "feature": "passes_per90",
+    "mean_abs_shap": 0.1024
+  },
+  {
+    "feature": "assists_per90",
+    "mean_abs_shap": 0.0969
+  },
+  {
+    "feature": "goals_per90",
+    "mean_abs_shap": 0.0883
+  },
+  {
+    "feature": "interceptions_per90",
+    "mean_abs_shap": 0.0811
+  }
+]

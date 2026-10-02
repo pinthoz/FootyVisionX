@@ -1,0 +1,106 @@
+# ==============================================================================
+# FootyVision - Professional Git Ignore Rules
+# ==============================================================================
+
+# --- Secrets & Environment Variables (CRITICAL) ---
+.env
+.env.*
+.env.local
+.env.production
+.env.development
+!.env.example
+*.pem
+*.key
+
+# --- Python & Bytecode ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+/lib/
+/lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# --- Virtual Environments ---
+.venv/
+venv/
+ENV/
+env/
+.pyenv/
+
+# --- Testing, Coverage & Caching ---
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.eval_cache/
+.ruff_cache/
+.mypy_cache/
+.tox/
+
+# --- Node & Frontend Dependencies ---
+node_modules/
+frontend/web/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# --- Next.js Build Output ---
+.next/
+out/
+frontend/web/.next/
+frontend/web/out/
+frontend/web/build/
+
+# --- Database Dumps, Backups & Large Data ---
+data/
+models/*
+!models/talent/
+# The value model ships with the repo for the same reason the talent ones do, and
+# one more: its training labels are two gitignored Kaggle CSVs, so a deployment
+# cannot refit it. Without this file the /value/* endpoints are 503 in production.
+!models/value/
+# Pitch maps: reduced from ~1GB of event JSON the API has no business downloading.
+!models/spatial/
+*.sql
+*.dump
+*.tar
+*.gz
+
+# --- Neon CLI Local State ---
+.neon
+.neon/
+
+
+# --- Operating System & IDEs ---
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+backend.hcl

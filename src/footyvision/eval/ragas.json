@@ -1,0 +1,1758 @@
+{
+  "measured_on": "2026-09-25",
+  "answer_model": "gemini-2.5-flash",
+  "answer_models": [
+    "gemini-3.1-flash-lite"
+  ],
+  "judge_model": "google/gemma-4-e4b",
+  "judges": [
+    "google/gemma-4-e4b"
+  ],
+  "questions": 241,
+  "metrics": {
+    "faithfulness": 0.809,
+    "context_precision": 0.359,
+    "answer_relevancy": 0.643
+  },
+  "unanswerable": {
+    "count": 38,
+    "faithfulness": 0.709
+  },
+  "answerable_relevancy": 0.759,
+  "by_kind": {
+    "constraint": {
+      "count": 50,
+      "faithfulness": 0.814,
+      "answer_relevancy": 0.755
+    },
+    "nationality": {
+      "count": 39,
+      "faithfulness": 0.758,
+      "answer_relevancy": 0.718
+    },
+    "comparison": {
+      "count": 34,
+      "faithfulness": 0.853,
+      "answer_relevancy": 0.796
+    },
+    "metric": {
+      "count": 42,
+      "faithfulness": 0.912,
+      "answer_relevancy": 0.819
+    },
+    "coverage-gap": {
+      "count": 15,
+      "faithfulness": 0.667,
+      "answer_relevancy": 0.539
+    },
+    "vague": {
+      "count": 2,
+      "faithfulness": 0.417,
+      "answer_relevancy": 0.8
+    },
+    "unanswerable-metric": {
+      "count": 25,
+      "faithfulness": 0.607,
+      "answer_relevancy": null
+    },
+    "unanswerable-player": {
+      "count": 13,
+      "faithfulness": 0.906,
+      "answer_relevancy": null
+    },
+    "physical": {
+      "count": 21,
+      "faithfulness": 0.934,
+      "answer_relevancy": 0.822
+    }
+  },
+  "rows": [
+    {
+      "question": "Who are the best left-footed wingers?",
+      "kind": "constraint",
+      "faithfulness": 0.737,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.904
+    },
+    {
+      "question": "Quais sao os melhores extremos canhotos?",
+      "kind": "constraint",
+      "faithfulness": 0.8,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.611
+    },
+    {
+      "question": "Find me a young centre back who is good on the ball.",
+      "kind": "constraint",
+      "faithfulness": 0.556,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.843
+    },
+    {
+      "question": "Quais os medios experientes com mais desarmes?",
+      "kind": "constraint",
+      "faithfulness": 0.857,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.612
+    },
+    {
+      "question": "Which two-footed midfielders move the ball forward best?",
+      "kind": "constraint",
+      "faithfulness": 0.571,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.81
+    },
+    {
+      "question": "Um lateral destro que faz a bola progredir",
+      "kind": "constraint",
+      "faithfulness": 1.0,
+      "context_precision": 0.45,
+      "answer_relevancy": 0.668
+    },
+    {
+      "question": "Show me goalkeepers under 25.",
+      "kind": "constraint",
+      "faithfulness": 1.0,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.866
+    },
+    {
+      "question": "Guarda-redes experientes que recuperam muitas bolas",
+      "kind": "constraint",
+      "faithfulness": 0.5,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.735
+    },
+    {
+      "question": "Which wing-backs get forward the most?",
+      "kind": "constraint",
+      "faithfulness": 1.0,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.896
+    },
+    {
+      "question": "Alas jovens que conduzem muito a bola",
+      "kind": "constraint",
+      "faithfulness": 1.0,
+      "context_precision": 0.167,
+      "answer_relevancy": 0.538
+    },
+    {
+      "question": "Two-footed centre backs, please.",
+      "kind": "constraint",
+      "faithfulness": 0.727,
+      "context_precision": 0.25,
+      "answer_relevancy": 0.817
+    },
+    {
+      "question": "Medios ofensivos canhotos",
+      "kind": "constraint",
+      "faithfulness": 0.812,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.543
+    },
+    {
+      "question": "Which Brazilian forwards stand out?",
+      "kind": "nationality",
+      "faithfulness": 1.0,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.88
+    },
+    {
+      "question": "Que jogadoras brasileiras se destacam?",
+      "kind": "nationality",
+      "faithfulness": 0.929,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.672
+    },
+    {
+      "question": "Are there any Portuguese midfielders in the data?",
+      "kind": "nationality",
+      "faithfulness": 1.0,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.955
+    },
+    {
+      "question": "Avancados argentinos com bom remate",
+      "kind": "nationality",
+      "faithfulness": 0.846,
+      "context_precision": 0.31,
+      "answer_relevancy": 0.656
+    },
+    {
+      "question": "Which French defenders are the most active?",
+      "kind": "nationality",
+      "faithfulness": 0.714,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.841
+    },
+    {
+      "question": "Extremos holandeses que driblam muito",
+      "kind": "nationality",
+      "faithfulness": 0.625,
+      "context_precision": 0.2,
+      "answer_relevancy": 0.693
+    },
+    {
+      "question": "Any Senegalese midfielders worth a look?",
+      "kind": "nationality",
+      "faithfulness": 0.95,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.9
+    },
+    {
+      "question": "Jogadoras suecas que se destacam",
+      "kind": "nationality",
+      "faithfulness": 0.615,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.787
+    },
+    {
+      "question": "Which Italian defenders read the game best?",
+      "kind": "nationality",
+      "faithfulness": 0.714,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.609
+    },
+    {
+      "question": "Compare Neymar and Griezmann on dribbling.",
+      "kind": "comparison",
+      "faithfulness": 1.0,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.857
+    },
+    {
+      "question": "Compara o Messi e o Cristiano Ronaldo",
+      "kind": "comparison",
+      "faithfulness": 0.667,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.881
+    },
+    {
+      "question": "Who creates more, Iniesta or Griezmann?",
+      "kind": "comparison",
+      "faithfulness": 0.714,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.896
+    },
+    {
+      "question": "Quem e melhor a desarmar, Casimiro ou Kante?",
+      "kind": "comparison",
+      "faithfulness": 1.0,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.837
+    },
+    {
+      "question": "How good is Alexia Putellas?",
+      "kind": "comparison",
+      "faithfulness": 0.818,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.861
+    },
+    {
+      "question": "Fala-me do Bernd Leno",
+      "kind": "comparison",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.748
+    },
+    {
+      "question": "Bale or Bakambu for goals?",
+      "kind": "comparison",
+      "faithfulness": 0.333,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.785
+    },
+    {
+      "question": "Compara a Alexia Putellas com a Caroline Graham Hansen",
+      "kind": "comparison",
+      "faithfulness": 1.0,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.765
+    },
+    {
+      "question": "Is Toni Kroos still progressing the ball?",
+      "kind": "comparison",
+      "faithfulness": 0.75,
+      "context_precision": 0.5,
+      "answer_relevancy": 0.933
+    },
+    {
+      "question": "O Ibrahimovic remata muito?",
+      "kind": "comparison",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.556
+    },
+    {
+      "question": "Who has the highest xG per 90 among centre forwards?",
+      "kind": "metric",
+      "faithfulness": 1.0,
+      "context_precision": 0.643,
+      "answer_relevancy": 0.973
+    },
+    {
+      "question": "Quais os guarda-redes que mais recuperam bolas?",
+      "kind": "metric",
+      "faithfulness": 0.75,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.808
+    },
+    {
+      "question": "Which defenders make the most interceptions?",
+      "kind": "metric",
+      "faithfulness": 1.0,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.83
+    },
+    {
+      "question": "Quem tem mais passes progressivos entre os medios?",
+      "kind": "metric",
+      "faithfulness": 1.0,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.725
+    },
+    {
+      "question": "Who attempts the most dribbles?",
+      "kind": "metric",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.853
+    },
+    {
+      "question": "Que avancados rematam mais vezes por 90 minutos?",
+      "kind": "metric",
+      "faithfulness": 1.0,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.718
+    },
+    {
+      "question": "Which midfielders press the most?",
+      "kind": "metric",
+      "faithfulness": 1.0,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.895
+    },
+    {
+      "question": "Which players complete the most passes?",
+      "kind": "metric",
+      "faithfulness": 1.0,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.861
+    },
+    {
+      "question": "Quem faz mais cortes por 90 minutos?",
+      "kind": "metric",
+      "faithfulness": 0.889,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.637
+    },
+    {
+      "question": "Who blocks the most shots?",
+      "kind": "metric",
+      "faithfulness": 0.889,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.857
+    },
+    {
+      "question": "Que jogadores conduzem mais a bola?",
+      "kind": "metric",
+      "faithfulness": 0.875,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.757
+    },
+    {
+      "question": "Which forwards create the most assists?",
+      "kind": "metric",
+      "faithfulness": 1.0,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.86
+    },
+    {
+      "question": "Which young players stand out in Liga F?",
+      "kind": "coverage-gap",
+      "faithfulness": 0.0,
+      "context_precision": 0.501,
+      "answer_relevancy": 0.833
+    },
+    {
+      "question": "Extremos canhotos da NWSL",
+      "kind": "coverage-gap",
+      "faithfulness": 0.5,
+      "context_precision": 0.325,
+      "answer_relevancy": 0.666
+    },
+    {
+      "question": "How old is Alexia Putellas?",
+      "kind": "coverage-gap",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Guarda-redes jovens da Frauen Bundesliga",
+      "kind": "coverage-gap",
+      "faithfulness": 0.5,
+      "context_precision": 0.796,
+      "answer_relevancy": 0.52
+    },
+    {
+      "question": "Who should I sign?",
+      "kind": "vague",
+      "faithfulness": 0.333,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.823
+    },
+    {
+      "question": "Quem e o melhor jogador do dataset?",
+      "kind": "vague",
+      "faithfulness": 0.5,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.776
+    },
+    {
+      "question": "Which players win the most aerial duels?",
+      "kind": "unanswerable-metric",
+      "faithfulness": 0.0,
+      "context_precision": 0.478,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "How many saves do the goalkeepers make?",
+      "kind": "unanswerable-metric",
+      "faithfulness": 0.667,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Qual e a distancia percorrida por jogo?",
+      "kind": "unanswerable-metric",
+      "faithfulness": 1.0,
+      "context_precision": 0.806,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Quantos cartoes amarelos tem o Sergio Ramos?",
+      "kind": "unanswerable-metric",
+      "faithfulness": 1.0,
+      "context_precision": 0.333,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "What is each player's market value?",
+      "kind": "unanswerable-metric",
+      "faithfulness": 1.0,
+      "context_precision": 0.887,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Quao bom e o Otavio do FC Porto?",
+      "kind": "unanswerable-player",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "How good is Erling Haaland?",
+      "kind": "unanswerable-player",
+      "faithfulness": 1.0,
+      "context_precision": 0.417,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Fala-me do Bruno Fernandes no Sporting",
+      "kind": "unanswerable-player",
+      "faithfulness": 0.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Quantos golos marcou o Benfica esta epoca?",
+      "kind": "unanswerable-player",
+      "faithfulness": 1.0,
+      "context_precision": 0.556,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Which right-footed strikers stand out?",
+      "kind": "constraint",
+      "faithfulness": 0.385,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.912
+    },
+    {
+      "question": "Fala-me do Bonucci",
+      "kind": "comparison",
+      "faithfulness": 0.875,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.687
+    },
+    {
+      "question": "Quais os guarda-redes com mais de 32 anos?",
+      "kind": "constraint",
+      "faithfulness": 1.0,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.828
+    },
+    {
+      "question": "Which left-footed wingers stand out?",
+      "kind": "constraint",
+      "faithfulness": 0.789,
+      "context_precision": 0.196,
+      "answer_relevancy": 0.778
+    },
+    {
+      "question": "Which are the tallest strikers?",
+      "kind": "physical",
+      "faithfulness": 0.75,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.919
+    },
+    {
+      "question": "Compare Neymar and Bonucci.",
+      "kind": "comparison",
+      "faithfulness": 0.8,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.862
+    },
+    {
+      "question": "Which centre forwards make the most pressures?",
+      "kind": "metric",
+      "faithfulness": 0.875,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.937
+    },
+    {
+      "question": "Quais os avancados com mais de 32 anos?",
+      "kind": "constraint",
+      "faithfulness": 0.947,
+      "context_precision": 0.196,
+      "answer_relevancy": 0.711
+    },
+    {
+      "question": "Which players lead for expected assists?",
+      "kind": "unanswerable-metric",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Que idade tem o Perisic?",
+      "kind": "physical",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.892
+    },
+    {
+      "question": "Compare Ronaldo and Mahrez.",
+      "kind": "comparison",
+      "faithfulness": 1.0,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.856
+    },
+    {
+      "question": "Which players lead for corners taken?",
+      "kind": "unanswerable-metric",
+      "faithfulness": 0.0,
+      "context_precision": 0.756,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Who are the left-footed players in the Frauen Bundesliga?",
+      "kind": "coverage-gap",
+      "faithfulness": 1.0,
+      "context_precision": 0.608,
+      "answer_relevancy": 0.564
+    },
+    {
+      "question": "Que guarda-redes tem mais golos por 90 minutos?",
+      "kind": "metric",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.876
+    },
+    {
+      "question": "Which English centre forwards are worth a look?",
+      "kind": "nationality",
+      "faithfulness": 0.357,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.836
+    },
+    {
+      "question": "How good is Bruno Fernandes?",
+      "kind": "unanswerable-player",
+      "faithfulness": 0.778,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.776
+    },
+    {
+      "question": "Quem tem mais defesas do guarda-redes?",
+      "kind": "unanswerable-metric",
+      "faithfulness": 1.0,
+      "context_precision": 0.333,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Que medios ofensivos tem mais recuperacoes por 90 minutos?",
+      "kind": "metric",
+      "faithfulness": 0.875,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.773
+    },
+    {
+      "question": "Which Austrian strikers are worth a look?",
+      "kind": "nationality",
+      "faithfulness": 0.556,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.586
+    },
+    {
+      "question": "Quem tem mais cantos?",
+      "kind": "unanswerable-metric",
+      "faithfulness": 1.0,
+      "context_precision": 0.967,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Which Senegalese centre forwards are worth a look?",
+      "kind": "nationality",
+      "faithfulness": 0.588,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.948
+    },
+    {
+      "question": "How good is Bukayo Saka?",
+      "kind": "unanswerable-player",
+      "faithfulness": 1.0,
+      "context_precision": 0.45,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Quem tem mais cartoes amarelos?",
+      "kind": "unanswerable-metric",
+      "faithfulness": 1.0,
+      "context_precision": 0.5,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "How good is Joao Felix?",
+      "kind": "unanswerable-player",
+      "faithfulness": 1.0,
+      "context_precision": 0.927,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Quais os extremos mais altos?",
+      "kind": "physical",
+      "faithfulness": 0.833,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.674
+    },
+    {
+      "question": "Which young players stand out in the FA Women's Super League?",
+      "kind": "coverage-gap",
+      "faithfulness": 1.0,
+      "context_precision": 0.667,
+      "answer_relevancy": 0.799
+    },
+    {
+      "question": "Fala-me do Alessandrini",
+      "kind": "comparison",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.704
+    },
+    {
+      "question": "Que defesas centrais ingleses se destacam?",
+      "kind": "nationality",
+      "faithfulness": 0.944,
+      "context_precision": 0.393,
+      "answer_relevancy": 0.817
+    },
+    {
+      "question": "Which Canadian full-backs are worth a look?",
+      "kind": "nationality",
+      "faithfulness": 0.643,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.877
+    },
+    {
+      "question": "How good is Iniesta?",
+      "kind": "comparison",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.852
+    },
+    {
+      "question": "Which players lead for penalties saved?",
+      "kind": "unanswerable-metric",
+      "faithfulness": 0.0,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Which full-backs make the most tackles?",
+      "kind": "metric",
+      "faithfulness": 1.0,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.853
+    },
+    {
+      "question": "Que alas polacos se destacam?",
+      "kind": "nationality",
+      "faithfulness": 0.75,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.589
+    },
+    {
+      "question": "Que extremos brasileiros se destacam?",
+      "kind": "nationality",
+      "faithfulness": 0.688,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.742
+    },
+    {
+      "question": "Quais os melhores medios ofensivos destros?",
+      "kind": "constraint",
+      "faithfulness": 0.917,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.597
+    },
+    {
+      "question": "Que alas tem mais pressoes por 90 minutos?",
+      "kind": "metric",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.688
+    },
+    {
+      "question": "Compare Pjanic and Kroos.",
+      "kind": "comparison",
+      "faithfulness": 1.0,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.839
+    },
+    {
+      "question": "Fala-me do Wendell",
+      "kind": "comparison",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.647
+    },
+    {
+      "question": "Which wing-backs make the most carries?",
+      "kind": "metric",
+      "faithfulness": 0.875,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.898
+    },
+    {
+      "question": "Que alas dinamarqueses se destacam?",
+      "kind": "nationality",
+      "faithfulness": 0.75,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.499
+    },
+    {
+      "question": "Fala-me do Perisic",
+      "kind": "comparison",
+      "faithfulness": 0.857,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.734
+    },
+    {
+      "question": "Compare Ozil and Lacazette.",
+      "kind": "comparison",
+      "faithfulness": 0.75,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.83
+    },
+    {
+      "question": "Who are the left-footed players in the FA Women's Super League?",
+      "kind": "coverage-gap",
+      "faithfulness": 1.0,
+      "context_precision": 0.917,
+      "answer_relevancy": 0.598
+    },
+    {
+      "question": "How tall is Modric?",
+      "kind": "physical",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.948
+    },
+    {
+      "question": "Que avancados escoceses se destacam?",
+      "kind": "nationality",
+      "faithfulness": 0.737,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.729
+    },
+    {
+      "question": "Which left-footed centre forwards stand out?",
+      "kind": "constraint",
+      "faithfulness": 0.733,
+      "context_precision": 0.196,
+      "answer_relevancy": 0.927
+    },
+    {
+      "question": "Show me defensive midfielders under 23.",
+      "kind": "constraint",
+      "faithfulness": 0.95,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.891
+    },
+    {
+      "question": "Which players lead for crosses?",
+      "kind": "unanswerable-metric",
+      "faithfulness": 0.0,
+      "context_precision": 0.867,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Which left-footed wing-backs stand out?",
+      "kind": "constraint",
+      "faithfulness": 1.0,
+      "context_precision": 0.196,
+      "answer_relevancy": 0.911
+    },
+    {
+      "question": "Que medios defensivos tem mais passes progressivos por 90 minutos?",
+      "kind": "metric",
+      "faithfulness": 0.889,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.789
+    },
+    {
+      "question": "Quais os medios defensivos mais altos?",
+      "kind": "physical",
+      "faithfulness": 0.857,
+      "context_precision": 0.643,
+      "answer_relevancy": 0.711
+    },
+    {
+      "question": "Quais os medios ofensivos mais altos?",
+      "kind": "physical",
+      "faithfulness": 0.75,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.655
+    },
+    {
+      "question": "Que laterais belgas se destacam?",
+      "kind": "nationality",
+      "faithfulness": 0.733,
+      "context_precision": 0.25,
+      "answer_relevancy": 0.602
+    },
+    {
+      "question": "Which are the tallest full-backs?",
+      "kind": "physical",
+      "faithfulness": 1.0,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.914
+    },
+    {
+      "question": "Quais os pontas de lanca com mais de 32 anos?",
+      "kind": "constraint",
+      "faithfulness": 1.0,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.64
+    },
+    {
+      "question": "How tall is Firmino?",
+      "kind": "physical",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.979
+    },
+    {
+      "question": "Who are the left-footed players in Serie A Women?",
+      "kind": "coverage-gap",
+      "faithfulness": 1.0,
+      "context_precision": 0.735,
+      "answer_relevancy": 0.618
+    },
+    {
+      "question": "Which players lead for offsides?",
+      "kind": "unanswerable-metric",
+      "faithfulness": 0.0,
+      "context_precision": 0.325,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Which two-footed strikers stand out?",
+      "kind": "constraint",
+      "faithfulness": 0.583,
+      "context_precision": 0.2,
+      "answer_relevancy": 0.757
+    },
+    {
+      "question": "How good is Depay?",
+      "kind": "comparison",
+      "faithfulness": 1.0,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.843
+    },
+    {
+      "question": "How tall is Griezmann?",
+      "kind": "physical",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.968
+    },
+    {
+      "question": "How good is Wendell?",
+      "kind": "comparison",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.854
+    },
+    {
+      "question": "How good is Alli?",
+      "kind": "comparison",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.787
+    },
+    {
+      "question": "Compare Firmino and Alli.",
+      "kind": "comparison",
+      "faithfulness": 0.909,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.819
+    },
+    {
+      "question": "Which right-footed goalkeepers stand out?",
+      "kind": "constraint",
+      "faithfulness": 0.857,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.774
+    },
+    {
+      "question": "Que medios ofensivos tem mais dribles por 90 minutos?",
+      "kind": "metric",
+      "faithfulness": 0.875,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.793
+    },
+    {
+      "question": "Which Scottish wingers are worth a look?",
+      "kind": "nationality",
+      "faithfulness": 0.636,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.593
+    },
+    {
+      "question": "Que idade tem o Kroos?",
+      "kind": "physical",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.922
+    },
+    {
+      "question": "Which players lead for saves?",
+      "kind": "unanswerable-metric",
+      "faithfulness": 0.0,
+      "context_precision": 0.167,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Que idade tem o Wendell?",
+      "kind": "physical",
+      "faithfulness": 1.0,
+      "context_precision": 0.667,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Which Croatian wingers are worth a look?",
+      "kind": "nationality",
+      "faithfulness": 0.625,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.619
+    },
+    {
+      "question": "Which Belgian goalkeepers are worth a look?",
+      "kind": "nationality",
+      "faithfulness": 0.583,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.698
+    },
+    {
+      "question": "Which right-footed wingers stand out?",
+      "kind": "constraint",
+      "faithfulness": 0.727,
+      "context_precision": 0.196,
+      "answer_relevancy": 0.904
+    },
+    {
+      "question": "Quais os melhores avancados ambidestros?",
+      "kind": "constraint",
+      "faithfulness": 0.733,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.648
+    },
+    {
+      "question": "Que medios defensivos dinamarqueses se destacam?",
+      "kind": "nationality",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.581
+    },
+    {
+      "question": "Which are the tallest centre backs?",
+      "kind": "physical",
+      "faithfulness": 0.75,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.94
+    },
+    {
+      "question": "Quais os melhores avancados canhotos?",
+      "kind": "constraint",
+      "faithfulness": 0.889,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.568
+    },
+    {
+      "question": "Which attacking midfielders make the most ball recoveries?",
+      "kind": "metric",
+      "faithfulness": 1.0,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.878
+    },
+    {
+      "question": "Compare Oyarzabal and Bellarabi.",
+      "kind": "comparison",
+      "faithfulness": 1.0,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.815
+    },
+    {
+      "question": "How tall are the defenders in the NWSL?",
+      "kind": "coverage-gap",
+      "faithfulness": 1.0,
+      "context_precision": 0.5,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Who are the left-footed players in the NWSL?",
+      "kind": "coverage-gap",
+      "faithfulness": 0.5,
+      "context_precision": 0.243,
+      "answer_relevancy": 0.899
+    },
+    {
+      "question": "Quais os defesas centrais com mais de 32 anos?",
+      "kind": "constraint",
+      "faithfulness": 1.0,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.804
+    },
+    {
+      "question": "How tall is Leno?",
+      "kind": "physical",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.95
+    },
+    {
+      "question": "How good is Jude Bellingham?",
+      "kind": "unanswerable-player",
+      "faithfulness": 1.0,
+      "context_precision": 0.927,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "How tall is Depay?",
+      "kind": "physical",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.955
+    },
+    {
+      "question": "Which two-footed wing-backs stand out?",
+      "kind": "constraint",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.622
+    },
+    {
+      "question": "Which are the tallest attacking midfielders?",
+      "kind": "physical",
+      "faithfulness": 1.0,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.943
+    },
+    {
+      "question": "Que medios defensivos tem mais pressoes por 90 minutos?",
+      "kind": "metric",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.657
+    },
+    {
+      "question": "Quem tem mais faltas?",
+      "kind": "unanswerable-metric",
+      "faithfulness": 0.5,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Which wing-backs make the most assists?",
+      "kind": "metric",
+      "faithfulness": 0.75,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.891
+    },
+    {
+      "question": "How tall are the defenders in Serie A Women?",
+      "kind": "coverage-gap",
+      "faithfulness": 1.0,
+      "context_precision": 0.7,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "How good is Ruben Dias?",
+      "kind": "unanswerable-player",
+      "faithfulness": 1.0,
+      "context_precision": 0.81,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Que laterais marroquinos se destacam?",
+      "kind": "nationality",
+      "faithfulness": 0.909,
+      "context_precision": 0.333,
+      "answer_relevancy": 0.67
+    },
+    {
+      "question": "Que pontas de lanca tem mais desarmes por 90 minutos?",
+      "kind": "metric",
+      "faithfulness": 0.889,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.643
+    },
+    {
+      "question": "Que laterais tem mais conducoes por 90 minutos?",
+      "kind": "metric",
+      "faithfulness": 0.875,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.679
+    },
+    {
+      "question": "Quais os laterais com mais de 32 anos?",
+      "kind": "constraint",
+      "faithfulness": 0.857,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.676
+    },
+    {
+      "question": "How good is Modric?",
+      "kind": "comparison",
+      "faithfulness": 0.556,
+      "context_precision": 0.75,
+      "answer_relevancy": 0.809
+    },
+    {
+      "question": "Which wing-backs make the most shots?",
+      "kind": "metric",
+      "faithfulness": 1.0,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.957
+    },
+    {
+      "question": "Which left-footed attacking midfielders stand out?",
+      "kind": "constraint",
+      "faithfulness": 0.8,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.958
+    },
+    {
+      "question": "Que defesas centrais tem mais assistencias por 90 minutos?",
+      "kind": "metric",
+      "faithfulness": 0.75,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.849
+    },
+    {
+      "question": "Quais os melhores defesas centrais ambidestros?",
+      "kind": "constraint",
+      "faithfulness": 0.3,
+      "context_precision": 0.25,
+      "answer_relevancy": 0.75
+    },
+    {
+      "question": "Which wingers make the most blocks?",
+      "kind": "metric",
+      "faithfulness": 1.0,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.874
+    },
+    {
+      "question": "Which strikers make the most shots?",
+      "kind": "metric",
+      "faithfulness": 0.875,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.91
+    },
+    {
+      "question": "Quais os melhores laterais destros?",
+      "kind": "constraint",
+      "faithfulness": 0.923,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.639
+    },
+    {
+      "question": "How good is Perisic?",
+      "kind": "comparison",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.814
+    },
+    {
+      "question": "Que defesas centrais servios se destacam?",
+      "kind": "nationality",
+      "faithfulness": 0.929,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.746
+    },
+    {
+      "question": "Which Danish centre forwards are worth a look?",
+      "kind": "nationality",
+      "faithfulness": 0.636,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.642
+    },
+    {
+      "question": "Which full-backs make the most shots?",
+      "kind": "metric",
+      "faithfulness": 0.857,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.871
+    },
+    {
+      "question": "Which Swedish attacking midfielders are worth a look?",
+      "kind": "nationality",
+      "faithfulness": 0.786,
+      "context_precision": 0.25,
+      "answer_relevancy": 0.603
+    },
+    {
+      "question": "Que avancados brasileiros se destacam?",
+      "kind": "nationality",
+      "faithfulness": 1.0,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.727
+    },
+    {
+      "question": "Que avancados tem mais pressoes por 90 minutos?",
+      "kind": "metric",
+      "faithfulness": 0.857,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.719
+    },
+    {
+      "question": "Fala-me do Bellarabi",
+      "kind": "comparison",
+      "faithfulness": 0.8,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.647
+    },
+    {
+      "question": "How good is Vinicius Junior?",
+      "kind": "unanswerable-player",
+      "faithfulness": 1.0,
+      "context_precision": 0.25,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Quais os melhores extremos destros?",
+      "kind": "constraint",
+      "faithfulness": 0.667,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.735
+    },
+    {
+      "question": "Which players lead for sprints?",
+      "kind": "unanswerable-metric",
+      "faithfulness": 1.0,
+      "context_precision": 0.75,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Which players lead for distance covered?",
+      "kind": "unanswerable-metric",
+      "faithfulness": 1.0,
+      "context_precision": 0.5,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Quais os medios ofensivos com mais de 32 anos?",
+      "kind": "constraint",
+      "faithfulness": 1.0,
+      "context_precision": 0.2,
+      "answer_relevancy": 0.743
+    },
+    {
+      "question": "Que medios defensivos tem mais dribles por 90 minutos?",
+      "kind": "metric",
+      "faithfulness": 1.0,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.775
+    },
+    {
+      "question": "Which two-footed centre backs stand out?",
+      "kind": "constraint",
+      "faithfulness": 0.6,
+      "context_precision": 0.325,
+      "answer_relevancy": 0.8
+    },
+    {
+      "question": "How good is Mahrez?",
+      "kind": "comparison",
+      "faithfulness": 0.3,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.652
+    },
+    {
+      "question": "Which attacking midfielders make the most goals?",
+      "kind": "metric",
+      "faithfulness": 0.875,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.859
+    },
+    {
+      "question": "Que avancados tem mais recuperacoes por 90 minutos?",
+      "kind": "metric",
+      "faithfulness": 0.857,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.762
+    },
+    {
+      "question": "Which centre forwards make the most carries?",
+      "kind": "metric",
+      "faithfulness": 0.75,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.926
+    },
+    {
+      "question": "Que medios defensivos suecos se destacam?",
+      "kind": "nationality",
+      "faithfulness": 0.8,
+      "context_precision": 0.333,
+      "answer_relevancy": 0.547
+    },
+    {
+      "question": "Which Swedish strikers are worth a look?",
+      "kind": "nationality",
+      "faithfulness": 0.818,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.869
+    },
+    {
+      "question": "Which wing-backs make the most clearances?",
+      "kind": "metric",
+      "faithfulness": 0.857,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.904
+    },
+    {
+      "question": "Show me wing-backs under 23.",
+      "kind": "constraint",
+      "faithfulness": 1.0,
+      "context_precision": 0.167,
+      "answer_relevancy": 0.888
+    },
+    {
+      "question": "Quem tem mais duelos aereos ganhos?",
+      "kind": "unanswerable-metric",
+      "faithfulness": 1.0,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Show me strikers under 23.",
+      "kind": "constraint",
+      "faithfulness": 0.95,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.861
+    },
+    {
+      "question": "Quais os melhores medios defensivos destros?",
+      "kind": "constraint",
+      "faithfulness": 0.923,
+      "context_precision": 0.276,
+      "answer_relevancy": 0.661
+    },
+    {
+      "question": "Quais os melhores pontas de lanca canhotos?",
+      "kind": "constraint",
+      "faithfulness": 0.769,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.579
+    },
+    {
+      "question": "Which players lead for fouls committed?",
+      "kind": "unanswerable-metric",
+      "faithfulness": 0.0,
+      "context_precision": 0.167,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Which goalkeepers make the most clearances?",
+      "kind": "metric",
+      "faithfulness": 0.8,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.839
+    },
+    {
+      "question": "Which strikers make the most carries?",
+      "kind": "metric",
+      "faithfulness": 1.0,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.869
+    },
+    {
+      "question": "Show me goalkeepers under 23.",
+      "kind": "constraint",
+      "faithfulness": 0.917,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.866
+    },
+    {
+      "question": "Which young players stand out in the Frauen Bundesliga?",
+      "kind": "coverage-gap",
+      "faithfulness": 0.5,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.803
+    },
+    {
+      "question": "Quem tem mais foras de jogo?",
+      "kind": "unanswerable-metric",
+      "faithfulness": 1.0,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Que laterais franceses se destacam?",
+      "kind": "nationality",
+      "faithfulness": 0.667,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.709
+    },
+    {
+      "question": "Which right-footed centre forwards stand out?",
+      "kind": "constraint",
+      "faithfulness": 0.5,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.934
+    },
+    {
+      "question": "Which right-footed defensive midfielders stand out?",
+      "kind": "constraint",
+      "faithfulness": 0.862,
+      "context_precision": 0.196,
+      "answer_relevancy": 0.911
+    },
+    {
+      "question": "Which Welsh centre backs are worth a look?",
+      "kind": "nationality",
+      "faithfulness": 0.667,
+      "context_precision": 0.2,
+      "answer_relevancy": 0.916
+    },
+    {
+      "question": "Which centre backs make the most carries?",
+      "kind": "metric",
+      "faithfulness": 0.889,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.92
+    },
+    {
+      "question": "Quais os melhores alas canhotos?",
+      "kind": "constraint",
+      "faithfulness": 0.588,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.588
+    },
+    {
+      "question": "Que idade tem o Ozil?",
+      "kind": "physical",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.875
+    },
+    {
+      "question": "Que avancados tem mais remates por 90 minutos?",
+      "kind": "metric",
+      "faithfulness": 1.0,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.682
+    },
+    {
+      "question": "Quem tem mais cruzamentos?",
+      "kind": "unanswerable-metric",
+      "faithfulness": 1.0,
+      "context_precision": 0.608,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "How tall are the defenders in the FA Women's Super League?",
+      "kind": "coverage-gap",
+      "faithfulness": 1.0,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Which are the tallest defensive midfielders?",
+      "kind": "physical",
+      "faithfulness": 0.833,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.91
+    },
+    {
+      "question": "Que medios defensivos italianos se destacam?",
+      "kind": "nationality",
+      "faithfulness": 0.722,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.788
+    },
+    {
+      "question": "Quais os avancados mais altos?",
+      "kind": "physical",
+      "faithfulness": 0.833,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.64
+    },
+    {
+      "question": "Fala-me do Cavani",
+      "kind": "comparison",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.684
+    },
+    {
+      "question": "Which players lead for transfer fees?",
+      "kind": "unanswerable-metric",
+      "faithfulness": 0.0,
+      "context_precision": 0.667,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Which Irish defensive midfielders are worth a look?",
+      "kind": "nationality",
+      "faithfulness": 0.294,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.673
+    },
+    {
+      "question": "Show me centre forwards under 23.",
+      "kind": "constraint",
+      "faithfulness": 1.0,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.859
+    },
+    {
+      "question": "Which players lead for yellow cards?",
+      "kind": "unanswerable-metric",
+      "faithfulness": 0.0,
+      "context_precision": 0.5,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Quais os melhores medios ofensivos canhotos?",
+      "kind": "constraint",
+      "faithfulness": 0.944,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.676
+    },
+    {
+      "question": "Quem tem mais distancia percorrida?",
+      "kind": "unanswerable-metric",
+      "faithfulness": 1.0,
+      "context_precision": 0.667,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Quais os melhores defesas centrais canhotos?",
+      "kind": "constraint",
+      "faithfulness": 0.714,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.708
+    },
+    {
+      "question": "Quais os melhores medios defensivos canhotos?",
+      "kind": "constraint",
+      "faithfulness": 0.696,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.601
+    },
+    {
+      "question": "Which Nigerian full-backs are worth a look?",
+      "kind": "nationality",
+      "faithfulness": 0.833,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.647
+    },
+    {
+      "question": "Compare Griezmann and Higuain.",
+      "kind": "comparison",
+      "faithfulness": 0.75,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.849
+    },
+    {
+      "question": "How good is Jamal Musiala?",
+      "kind": "unanswerable-player",
+      "faithfulness": 1.0,
+      "context_precision": 0.927,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "How good is Firmino?",
+      "kind": "comparison",
+      "faithfulness": 0.909,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.834
+    },
+    {
+      "question": "Which players lead for aerial duels won?",
+      "kind": "unanswerable-metric",
+      "faithfulness": 1.0,
+      "context_precision": 0.877,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Which young players stand out in the NWSL?",
+      "kind": "coverage-gap",
+      "faithfulness": 0.0,
+      "context_precision": 0.833,
+      "answer_relevancy": 0.916
+    },
+    {
+      "question": "How good is Casimiro?",
+      "kind": "comparison",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.783
+    },
+    {
+      "question": "Which full-backs make the most assists?",
+      "kind": "metric",
+      "faithfulness": 0.75,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.883
+    },
+    {
+      "question": "Show me attacking midfielders under 23.",
+      "kind": "constraint",
+      "faithfulness": 1.0,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.891
+    },
+    {
+      "question": "Which Austrian goalkeepers are worth a look?",
+      "kind": "nationality",
+      "faithfulness": 1.0,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.488
+    },
+    {
+      "question": "Que laterais croatas se destacam?",
+      "kind": "nationality",
+      "faithfulness": 1.0,
+      "context_precision": 0.333,
+      "answer_relevancy": 0.688
+    },
+    {
+      "question": "How tall is Benzema?",
+      "kind": "physical",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.984
+    },
+    {
+      "question": "Que guarda-redes polacos se destacam?",
+      "kind": "nationality",
+      "faithfulness": 0.933,
+      "context_precision": 0.2,
+      "answer_relevancy": 0.643
+    },
+    {
+      "question": "Quais os melhores laterais canhotos?",
+      "kind": "constraint",
+      "faithfulness": 0.833,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.616
+    },
+    {
+      "question": "Que idade tem o Messi?",
+      "kind": "physical",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.879
+    },
+    {
+      "question": "Que extremos tem mais pressoes por 90 minutos?",
+      "kind": "metric",
+      "faithfulness": 0.889,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.651
+    },
+    {
+      "question": "Quais os pontas de lanca mais altos?",
+      "kind": "physical",
+      "faithfulness": 1.0,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.615
+    },
+    {
+      "question": "How good is Neymar?",
+      "kind": "comparison",
+      "faithfulness": 0.667,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.865
+    },
+    {
+      "question": "How good is Rafael Leao?",
+      "kind": "unanswerable-player",
+      "faithfulness": 1.0,
+      "context_precision": 0.679,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Compare Payet and Coutinho.",
+      "kind": "comparison",
+      "faithfulness": 0.556,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.869
+    },
+    {
+      "question": "Which young players stand out in Serie A Women?",
+      "kind": "coverage-gap",
+      "faithfulness": 0.0,
+      "context_precision": 0.0,
+      "answer_relevancy": 0.871
+    },
+    {
+      "question": "Quais os melhores medios defensivos ambidestros?",
+      "kind": "constraint",
+      "faithfulness": 0.8,
+      "context_precision": 0.167,
+      "answer_relevancy": 0.685
+    },
+    {
+      "question": "How good is Pedri?",
+      "kind": "unanswerable-player",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Which Brazilian centre forwards are worth a look?",
+      "kind": "nationality",
+      "faithfulness": 0.6,
+      "context_precision": 0.143,
+      "answer_relevancy": 0.938
+    }
+  ]
+}

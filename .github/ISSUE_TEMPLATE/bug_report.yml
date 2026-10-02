@@ -1,0 +1,52 @@
+name: Bug report
+description: Something is not working as documented.
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you expect, and what did you get instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. footyvision load -c 11 -s 27
+        2. GET /players/1/similar
+        3. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / traceback
+      render: shell
+
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      description: OS, Python version, and whether you run via Docker Compose or locally.
+      placeholder: "Windows 11, Python 3.12, docker compose up db"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - ETL / data loading
+        - ML (similarity, score, talent, value)
+        - LLM / RAG
+        - API
+        - Frontend
+        - Infra / Docker
+        - Other
+    validations:
+      required: true

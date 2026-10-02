@@ -1,0 +1,72 @@
+services:
+  db:
+    image: postgres:16
+    container_name: footyvision-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-footy}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-footy}
+      POSTGRES_DB: ${POSTGRES_DB:-footyvision}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-footy} -d ${POSTGRES_DB:-footyvision}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      args:
+        # Set only behind a TLS-intercepting proxy, e.g. "pypi.org files.pythonhosted.org".
+        PIP_TRUSTED_HOSTS: ${PIP_TRUSTED_HOSTS:-}
+    container_name: footyvision-api
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_USER: ${POSTGRES_USER:-footy}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-footy}
+      POSTGRES_DB: ${POSTGRES_DB:-footyvision}
+      # Reach the LLM/embedding server running on the host (LM Studio / Ollama).
+      # This deliberately does NOT read LLM_BASE_URL: that key is the host-side URL
+      # (localhost:1234) and inside a container localhost is the container itself.
+      # Override with LLM_BASE_URL_DOCKER if your LLM lives somewhere else.
+      LLM_BASE_URL: ${LLM_BASE_URL_DOCKER:-http://host.docker.internal:1234/v1}
+      # Model names, on the other hand, are the same on the host and in the container.
+      LLM_MODEL: ${LLM_MODEL:-qwen2.5-7b-instruct}
+      LLM_EMBED_MODEL: ${LLM_EMBED_MODEL:-text-embedding-embeddinggemma-300m-qat}
+      # Task prefixes must match the embedding model above.
+      LLM_EMBED_DOCUMENT_PREFIX: "${LLM_EMBED_DOCUMENT_PREFIX:-title: none | text: }"
+      LLM_EMBED_QUERY_PREFIX: "${LLM_EMBED_QUERY_PREFIX:-task: search result | query: }"
+      LLM_API_KEY: ${LLM_API_KEY:-not-needed-for-local}
+    extra_hosts:
+      # Lets the container resolve the host on Linux (Docker Desktop adds it automatically).
+      - "host.docker.internal:host-gateway"
+    volumes:
+      # Share data (Transfermarkt CSVs, RAG vector store) between host and container.
+      - ./data:/app/data
+    ports:
+      - "8000:8000"
+    # The Dockerfile CMD runs `footyvision init-db` before uvicorn.
+
+  web:
+    build:
+      context: ./frontend/web
+      args:
+        # Baked into the client bundle; the browser reaches the host-published API.
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8000}
+    container_name: footyvision-web
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      - "3000:3000"
+
+volumes:
+  pgdata:

@@ -1,0 +1,128 @@
+[project]
+name = "footyvision"
+version = "0.1.0"
+description = "AI football scouting platform — similarity, talent scoring and LLM scouting reports."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Ana Pinto" }]
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = ["football", "soccer", "scouting", "statsbomb", "machine-learning", "llm", "rag"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Framework :: FastAPI",
+]
+
+dependencies = [
+    # API
+    "fastapi>=0.111",
+    "uvicorn[standard]>=0.30",
+    # DB
+    "sqlalchemy>=2.0",
+    "psycopg2-binary>=2.9",
+    "alembic>=1.13",
+    # Config
+    "pydantic>=2.7",
+    "pydantic-settings>=2.3",
+    # Data / Aggregation
+    "pandas>=2.2",
+    "numpy>=1.26",
+    # CLI
+    "typer>=0.12",
+    "rich>=13.7",
+    # LLM (OpenAI-compatible HTTP client for local LM Studio / Ollama / Cloud)
+    "httpx>=0.27",
+    # Similarity, radars and the Performance Score are numpy/pandas only. The trained
+    # models are *not* a runtime dependency: see the `train` extra below.
+]
+
+[project.optional-dependencies]
+# Everything that fits a model: the position classifiers, the team Poisson ratings, the
+# value regressor, SHAP. The API serves their outputs from models/ and imports none of
+# them -- importing them cost 76MB and loading the fitted models another 175MB, which is
+# what had the 512MB deployment restarted. Keeping them out of the runtime install is also
+# what makes production fail safe: a stale artifact cannot trigger an in-process refit
+# there, because the libraries to refit with are not installed.
+#
+#   pip install -e ".[train]"   then   footyvision precompute / value-report
+train = [
+    "scikit-learn>=1.5",
+    "xgboost>=2.0",
+    "shap>=0.45",
+    "lightgbm>=4.0",
+    "rapidfuzz>=3.0",
+]
+etl = [
+    # Scraping / Extraction dependencies: not needed in API production runtime
+    "statsbombpy>=1.13",
+    "soccerdata>=1.8",
+]
+ml = [
+    # Optional: UMAP 2D "player map" (visualisation only, Phase 1 stretch).
+    "umap-learn>=0.5",
+]
+dev = [
+    "footyvision[train]",
+    "pytest>=8.2",
+    "httpx>=0.27",
+    "ruff>=0.5",
+    "statsbombpy>=1.13",
+    "soccerdata>=1.8",
+]
+# RAGAS scoring for the assistant (scripts/eval_ragas.py). Kept out of the runtime
+# because it drags in the whole LangChain stack for what is an offline measurement.
+#
+# The upper bounds are not caution, they are required: ragas 0.4.3 imports
+# `langchain_community.chat_models.vertexai`, a path removed in langchain-community 0.4,
+# and fails at import time without them. Installing ragas alone silently pulls the 1.x
+# LangChain line and breaks it.
+eval = [
+    "ragas>=0.4,<0.5",
+    "langchain-community>=0.3,<0.4",
+    "langchain-core>=0.3,<1.0",
+    "langchain>=0.3,<1.0",
+    "langchain-openai>=0.3,<1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/pinthoz/FootyVisionX"
+Repository = "https://github.com/pinthoz/FootyVisionX"
+Issues = "https://github.com/pinthoz/FootyVisionX/issues"
+Architecture = "https://github.com/pinthoz/FootyVisionX/blob/main/docs/ARCHITECTURE.md"
+
+[project.scripts]
+footyvision = "footyvision.cli:app"
+
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+# The published evaluation travels with the package: the API serves it, so a wheel
+# without it answers 404 where a checkout answers with the scores.
+[tool.setuptools.package-data]
+"footyvision.eval" = ["*.json"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "W"]
+# B008 is the intended FastAPI idiom (Depends()/Query() in argument defaults).
+ignore = ["B008"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-q"

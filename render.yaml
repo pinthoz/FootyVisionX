@@ -1,0 +1,51 @@
+services:
+  - type: web
+    name: footyvision-api
+    runtime: python
+    plan: free
+    region: frankfurt
+    # The runtime install only. The `train` extra (scikit-learn, xgboost, lightgbm, shap)
+    # is deliberately absent: the API serves precomputed outputs from models/, and without
+    # the libraries a stale artifact cannot trigger a 250MB in-process refit here.
+    buildCommand: pip install -U pip && pip install -e .
+    # Migrations run between build and start. Without this the schema silently drifts:
+    # a deploy that adds a table ships code expecting it against a database that has
+    # never seen it, and the first request that touches it is the one that finds out.
+    preDeployCommand: alembic upgrade head
+    startCommand: uvicorn footyvision.api.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      # Measured: the API sits at ~400MB warm and 24 concurrent requests peaked at 505MB
+      # against this plan's 512MB ceiling, which is the out-of-memory restart. It is not a
+      # leak -- memory plateaus after thirty requests. These trim the numeric thread pools,
+      # which are worth nothing on a shared CPU and cost an arena each.
+      - key: OMP_NUM_THREADS
+        value: "1"
+      - key: OPENBLAS_NUM_THREADS
+        value: "1"
+      - key: MKL_NUM_THREADS
+        value: "1"
+      - key: DATABASE_URL
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: CLOUD_LLM_BASE_URL
+        value: https://generativelanguage.googleapis.com/v1beta/openai
+      - key: CLOUD_LLM_MODEL
+        value: gemini-2.5-flash
+      - key: CLOUD_LLM_EMBED_MODEL
+        value: gemini-embedding-2
+      # Which frontends may call this API from a browser. Set to the Vercel URL.
+      # Leaving it unset falls back to localhost, which blocks the deployed dashboard.
+      - key: CORS_ORIGINS
+        sync: false
+      # Optional: the Vercel scope slug whose preview deployments may call the API
+      # (footy-vision-<hash>-<scope>.vercel.app). Unset admits production and localhost only.
+      - key: CORS_PREVIEW_SCOPE
+        sync: false
+      # Calls per minute per client to the endpoints that invoke an LLM. Without this,
+      # anyone who finds the URL can drain GEMINI_API_KEY.
+      - key: RATE_LIMIT_PER_MINUTE
+        value: "20"

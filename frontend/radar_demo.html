@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FootyVision — Scouting Radar</title>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+<style>
+  :root {
+    --bg: #0d1117; --panel: #161b22; --border: #30363d; --text: #e6edf3;
+    --muted: #8b949e; --a: #58a6ff; --b: #f778ba; --accent: #3fb950;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Segoe UI", system-ui, sans-serif; background: var(--bg);
+         color: var(--text); }
+  header { padding: 16px 24px; border-bottom: 1px solid var(--border); display: flex;
+           align-items: baseline; gap: 12px; }
+  header h1 { font-size: 18px; margin: 0; font-weight: 650; }
+  header .sub { color: var(--muted); font-size: 13px; }
+  .layout { display: grid; grid-template-columns: 320px 1fr; gap: 20px; padding: 20px 24px; }
+  .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+           padding: 16px; }
+  label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+  input, button { font-size: 14px; }
+  input[type=text] { width: 100%; padding: 9px 11px; margin-top: 6px; background: #0d1117;
+    border: 1px solid var(--border); border-radius: 7px; color: var(--text); }
+  .results { margin-top: 12px; max-height: 220px; overflow-y: auto; }
+  .row { display: flex; justify-content: space-between; align-items: center; padding: 7px 9px;
+    border-radius: 6px; cursor: pointer; font-size: 13px; }
+  .row:hover { background: #1f2630; }
+  .row .pos { color: var(--muted); font-size: 11px; }
+  .slotbar { display: flex; gap: 8px; margin-top: 12px; }
+  .slot { flex: 1; padding: 8px 10px; border-radius: 7px; border: 1px solid var(--border);
+    font-size: 12px; }
+  .slot.a { border-color: var(--a); } .slot.b { border-color: var(--b); }
+  .slot .who { font-weight: 600; font-size: 13px; }
+  .simrow { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center;
+    padding: 6px 4px; font-size: 13px; border-bottom: 1px solid #21262d; }
+  .simbar { height: 6px; background: #21262d; border-radius: 4px; overflow: hidden; margin-top: 3px; }
+  .simbar > span { display: block; height: 100%; background: var(--accent); }
+  .muted { color: var(--muted); font-size: 12px; }
+  #chart { width: 100%; height: 560px; }
+  .hint { font-size: 12px; color: var(--muted); margin-top: 8px; line-height: 1.5; }
+  button.clear { margin-top: 10px; width: 100%; padding: 8px; background: #21262d;
+    border: 1px solid var(--border); border-radius: 7px; color: var(--text); cursor: pointer; }
+</style>
+</head>
+<body>
+<header>
+  <h1>FootyVision</h1>
+  <span class="sub">Scouting Radar · percentiles within position group</span>
+</header>
+
+<div class="layout">
+  <div>
+    <div class="panel">
+      <label for="q">Search player</label>
+      <input id="q" type="text" placeholder="e.g. Bellarabi" autocomplete="off" />
+      <div class="results" id="results"></div>
+      <div class="slotbar">
+        <div class="slot a"><div class="muted">Player A</div><div class="who" id="slotA">—</div></div>
+        <div class="slot b"><div class="muted">Player B</div><div class="who" id="slotB">—</div></div>
+      </div>
+      <button class="clear" onclick="clearSlots()">Clear</button>
+      <div id="scoreA" class="muted" style="margin-top:10px; font-size:12.5px;"></div>
+      <div class="hint">Click a result to fill Player A, then another to fill Player B and
+        compare. The radar shows each metric as a percentile vs peers in the same role.</div>
+    </div>
+
+    <div class="panel" style="margin-top:16px;">
+      <label for="nlq">Natural-language search</label>
+      <input id="nlq" type="text" placeholder="e.g. La Liga forwards with xG per 90 over 0.5"
+             onkeydown="if(event.key==='Enter') nlSearch()" />
+      <div id="nlInterpreted" class="muted" style="margin-top:8px;"></div>
+      <div id="nlResults" class="results" style="max-height:240px;"></div>
+    </div>
+
+    <div class="panel" style="margin-top:16px;">
+      <label>Most similar to Player A</label>
+      <div id="similar" class="muted" style="margin-top:8px;">Pick a player to see matches.</div>
+    </div>
+  </div>
+
+  <div>
+    <div class="panel">
+      <div id="chart"></div>
+    </div>
+    <div class="panel" style="margin-top:16px;">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <label>LLM scouting report — Player A</label>
+        <button class="clear" style="width:auto; margin:0; padding:6px 14px;"
+                id="reportBtn" onclick="generateReport()" disabled>Generate report</button>
+      </div>
+      <div id="report" class="muted" style="margin-top:12px; white-space:pre-wrap;
+           line-height:1.55; font-size:13.5px;">Pick Player A, then generate a grounded
+        scouting report (needs a local LLM running — LM Studio / Ollama).</div>
+    </div>
+
+    <div class="panel" style="margin-top:16px;">
+      <label for="askq">Scouting assistant (RAG)</label>
+      <input id="askq" type="text" placeholder="e.g. médio defensivo que ganhe bolas e intercete"
+             onkeydown="if(event.key==='Enter') askAssistant()" />
+      <div id="answer" class="muted" style="margin-top:12px; white-space:pre-wrap;
+           line-height:1.55; font-size:13.5px;">Ask a question — it retrieves relevant players
+        and answers grounded in them (needs the local LLM + embedding model).</div>
+      <div id="answerSources" class="muted" style="margin-top:8px; font-size:12px;"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = "http://localhost:8000";
+// Curated radar axes (subset of the 17 per-90 metrics) with readable labels.
+const AXES = [
+  ["xg_per90", "xG"], ["shots_per90", "Shots"], ["assists_per90", "Assists"],
+  ["progressive_passes_per90", "Prog Passes"], ["passes_per90", "Passes"],
+  ["dribbles_per90", "Dribbles"], ["ball_recoveries_per90", "Recoveries"],
+  ["tackles_per90", "Tackles"], ["interceptions_per90", "Interceptions"],
+];
+const slots = { A: null, B: null };  // each: {id, name, radar}
+
+const $ = (id) => document.getElementById(id);
+
+let searchTimer;
+$("q").addEventListener("input", (e) => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => search(e.target.value.trim()), 200);
+});
+
+async function search(term) {
+  if (!term) { $("results").innerHTML = ""; return; }
+  const res = await fetch(`${API}/players?search=${encodeURIComponent(term)}&limit=25`);
+  const players = await res.json();
+  $("results").innerHTML = players.map(p =>
+    `<div class="row" onclick="pick(${p.id}, '${p.name.replace(/'/g, "\\'")}')">
+       <span>${p.name}</span></div>`).join("") || `<div class="muted">No matches.</div>`;
+}
+
+async function pick(id, name) {
+  const slot = slots.A ? "B" : "A";
+  const radar = await fetchRadar(id);
+  if (!radar) { alert(`${name}: no season above the minutes floor yet.`); return; }
+  slots[slot] = { id, name, radar };
+  $("slot" + slot).textContent = `${name}`;
+  if (slot === "A") { loadSimilar(id); loadScore(id); $("reportBtn").disabled = false; }
+  draw();
+}
+
+async function loadScore(id) {
+  $("scoreA").textContent = "Scoring…";
+  try {
+    const res = await fetch(`${API}/players/${id}/score`);
+    if (!res.ok) { $("scoreA").textContent = ""; return; }
+    const s = await res.json();
+    const style = Object.entries(s.style_profile)
+      .sort((a, b) => b[1] - a[1])[0];
+    $("scoreA").innerHTML = `<b style="color:var(--accent); font-size:15px;">`
+      + `Performance Score ${s.performance_score}</b> `
+      + `<span style="color:var(--muted)">· plays like ${style[0]} `
+      + `(${Math.round(style[1] * 100)}%)</span>`;
+  } catch { $("scoreA").textContent = ""; }
+}
+
+async function generateReport() {
+  if (!slots.A) return;
+  const btn = $("reportBtn");
+  btn.disabled = true; btn.textContent = "Generating…";
+  $("report").textContent = "Contacting local LLM…";
+  try {
+    const res = await fetch(`${API}/players/${slots.A.id}/report`, { method: "POST" });
+    if (res.status === 503) {
+      $("report").textContent = "⚠️ Local LLM not reachable. Start LM Studio or Ollama "
+        + "(OpenAI-compatible server) at the configured URL and try again.";
+    } else if (!res.ok) {
+      $("report").textContent = `Error ${res.status}.`;
+    } else {
+      const data = await res.json();
+      $("report").textContent = data.report;
+      $("report").style.color = "var(--text)";
+    }
+  } catch (e) {
+    $("report").textContent = "Request failed: " + e;
+  } finally {
+    btn.disabled = false; btn.textContent = "Generate report";
+  }
+}
+
+async function fetchRadar(id) {
+  const res = await fetch(`${API}/players/${id}/radar`);
+  if (!res.ok) return null;
+  return res.json();
+}
+
+function clearSlots() {
+  slots.A = slots.B = null;
+  $("slotA").textContent = $("slotB").textContent = "—";
+  $("similar").innerHTML = "Pick a player to see matches.";
+  $("scoreA").textContent = "";
+  $("reportBtn").disabled = true;
+  $("report").textContent = "Pick Player A, then generate a grounded scouting report "
+    + "(needs a local LLM running — LM Studio / Ollama).";
+  Plotly.purge("chart");
+}
+
+function trace(entry, color) {
+  const r = AXES.map(([k]) => entry.radar.metrics[k]?.percentile ?? 0);
+  const labels = AXES.map(([, lbl]) => lbl);
+  r.push(r[0]); labels.push(labels[0]);  // close the loop
+  return {
+    type: "scatterpolar", mode: "lines+markers", r, theta: labels,
+    name: `${entry.name} (${entry.radar.position_group})`, fill: "toself",
+    line: { color }, fillcolor: color + "33",
+  };
+}
+
+function draw() {
+  const data = [];
+  if (slots.A) data.push(trace(slots.A, "#58a6ff"));
+  if (slots.B) data.push(trace(slots.B, "#f778ba"));
+  const layout = {
+    paper_bgcolor: "rgba(0,0,0,0)", font: { color: "#e6edf3" },
+    polar: { bgcolor: "rgba(0,0,0,0)",
+      radialaxis: { visible: true, range: [0, 100], gridcolor: "#30363d", tickfont: { size: 9 } },
+      angularaxis: { gridcolor: "#30363d" } },
+    showlegend: true, legend: { orientation: "h", y: -0.08 },
+    margin: { l: 60, r: 60, t: 30, b: 40 },
+  };
+  Plotly.react("chart", data, layout, { displayModeBar: false, responsive: true });
+}
+
+async function nlSearch() {
+  const q = $("nlq").value.trim();
+  if (!q) return;
+  $("nlResults").innerHTML = ""; $("nlInterpreted").textContent = "Interpreting…";
+  try {
+    const res = await fetch(`${API}/search`, {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query: q }),
+    });
+    if (res.status === 503) {
+      $("nlInterpreted").textContent = "⚠️ NL search needs a local LLM running (LM Studio / Ollama).";
+      return;
+    }
+    if (res.status === 422) { $("nlInterpreted").textContent = "Couldn't turn that into a query."; return; }
+    if (!res.ok) { $("nlInterpreted").textContent = `Error ${res.status}.`; return; }
+    const data = await res.json();
+    const conds = (data.interpreted.conditions || [])
+      .map(c => `${c.field} ${c.op} ${c.value}`).join(", ") || "no filters";
+    $("nlInterpreted").textContent = `${data.count} results · interpreted: ${conds}`;
+    $("nlResults").innerHTML = data.results.map(r =>
+      `<div class="row" onclick="pick(${r.player_id}, '${r.name.replace(/'/g, "\\'")}')">
+         <span>${r.name}</span><span class="pos">${r.competition ?? ""}</span></div>`).join("");
+  } catch (e) {
+    $("nlInterpreted").textContent = "Request failed: " + e;
+  }
+}
+
+async function askAssistant() {
+  const q = $("askq").value.trim();
+  if (!q) return;
+  $("answer").textContent = "Retrieving players and thinking…";
+  $("answerSources").textContent = "";
+  try {
+    const res = await fetch(`${API}/assistant`, {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question: q, k: 6 }),
+    });
+    if (res.status === 503) {
+      $("answer").textContent = "⚠️ Needs the local LLM + embedding model running (LM Studio).";
+      return;
+    }
+    if (!res.ok) { $("answer").textContent = `Error ${res.status}.`; return; }
+    const data = await res.json();
+    $("answer").textContent = data.answer;
+    $("answer").style.color = "var(--text)";
+    $("answerSources").textContent = "Retrieved: " + data.sources.map(s => s.name).join(" · ");
+  } catch (e) {
+    $("answer").textContent = "Request failed: " + e;
+  }
+}
+
+async function loadSimilar(id) {
+  $("similar").innerHTML = "Loading…";
+  const res = await fetch(`${API}/players/${id}/similar?top_n=8`);
+  if (!res.ok) { $("similar").innerHTML = "No comparison pool."; return; }
+  const data = await res.json();
+  if (!data.results.length) { $("similar").innerHTML = "No peers above the minutes floor."; return; }
+  $("similar").innerHTML = data.results.map(r => {
+    const pct = Math.max(0, Math.round(r.similarity * 100));
+    return `<div class="simrow">
+      <div><div onclick="pick(${r.player_id}, '${r.name.replace(/'/g, "\\'")}')"
+             style="cursor:pointer">${r.name} <span class="pos">${r.primary_position ?? ""}</span></div>
+        <div class="simbar"><span style="width:${pct}%"></span></div></div>
+      <div>${r.similarity.toFixed(2)}</div></div>`;
+  }).join("");
+}
+</script>
+</body>
+</html>

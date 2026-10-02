@@ -1,0 +1,11 @@
+# Keeps the build context small: docker build uploads everything not listed here.
+.git
+infra
+frontend
+data
+checkpoints
+.venv
+**/__pycache__
+**/*.egg-info
+.env
+models/embeddinggemma-footyvision/checkpoints
