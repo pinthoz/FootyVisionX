@@ -40,7 +40,8 @@ def fetch_url(url: str, is_json: bool = True):
         url,
         headers={
             "User-Agent": (
-                "FootyVisionScout/1.0 (https://github.com/pinthoz/FootyVisionX; football analytics)"
+                "FootyVisionScout/1.0 "
+                "(https://github.com/pinthoz/FootyVisionX; football analytics)"
             )
         },
     )
