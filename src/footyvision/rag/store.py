@@ -15,9 +15,9 @@ from pathlib import Path
 
 import numpy as np
 
+from footyvision.config import get_settings
 from footyvision.llm.client import LLMClient
 from footyvision.rag.constraints import Constraints
-from footyvision.config import get_settings
 
 
 @dataclass

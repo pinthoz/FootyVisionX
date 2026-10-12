@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from datetime import date
 
+from pgvector.sqlalchemy import Vector
 from sqlalchemy import (
     Date,
     Float,
@@ -21,8 +22,6 @@ from sqlalchemy import (
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from footyvision.db.base import Base
-
-from pgvector.sqlalchemy import Vector
 
 # Counting metrics aggregated from StatsBomb events. Kept as a tuple so the ETL and
 # similarity layers can iterate the canonical metric list without hardcoding it.
