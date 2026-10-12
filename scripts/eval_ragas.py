@@ -63,6 +63,7 @@ import json
 import random
 import sys
 import time
+from collections import Counter
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -224,6 +225,24 @@ def _judge(model: str | None, base_url: str | None = None):
     from ragas.embeddings import OpenAIEmbeddings
     from ragas.llms import llm_factory
 
+    if model and model.startswith("bedrock/"):
+        # A judge from a third family, so neither Gemini nor Nova grades its own kind.
+        # LiteLLM signs the requests with the AWS credentials; instructor wraps it so
+        # RAGAS gets the structured (JSON) output its metrics parse.
+        import instructor
+        import litellm
+        from ragas.embeddings import LiteLLMEmbeddings
+
+        llm = llm_factory(
+            model,
+            provider="litellm",
+            client=instructor.from_litellm(litellm.acompletion),
+            adapter="litellm",
+            max_tokens=4096,
+            temperature=0.0,
+        )
+        return llm, LiteLLMEmbeddings(model="bedrock/amazon.titan-embed-text-v2:0")
+
     settings = get_settings()
     if base_url:
         import instructor
@@ -382,11 +401,16 @@ def write_snapshot(rows: list[dict], path: Path, judge: str, answerer: str) -> N
     def mean(values: list[float]) -> float | None:
         return round(sum(values) / len(values), 3) if values else None
 
+    # Read off the rows, like `answer_models`. `answerer` is only the model the run was
+    # configured with, and published as the headline it named gemini-2.5-flash for runs
+    # that model never touched. When a quota split the run, the model that wrote most of it.
+    answered = Counter(r.get("answered_by", answerer) for r in scored)
+
     payload = {
         "measured_on": datetime.now(UTC).date().isoformat(),
-        "answer_model": answerer,
+        "answer_model": answered.most_common(1)[0][0],
         # Every model that wrote an answer, read off the rows rather than assumed.
-        "answer_models": sorted({r.get("answered_by", answerer) for r in scored}),
+        "answer_models": sorted(answered),
         "judge_model": judge,
         # Every model that scored a row. More than one means the panel was mixed, which
         # makes comparisons *between* categories unreliable: different judges calibrate

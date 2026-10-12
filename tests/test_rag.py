@@ -891,3 +891,31 @@ def test_an_error_every_model_would_repeat_is_not_retried(monkeypatch):
     with pytest.raises(LLMError):
         c.chat("system", "user")
     assert tried == ["gemini-3.5-flash-lite"]
+
+
+def test_bedrock_answers_when_every_gemini_model_is_out_of_quota(monkeypatch):
+    """The last link of the chain is Bedrock, reached through Converse, not httpx."""
+    import sys
+    import types
+
+    calls: list[str] = []
+
+    class FakeBedrock:
+        def converse(self, **kwargs):
+            calls.append(kwargs["modelId"])
+            return {
+                "output": {"message": {"content": [{"text": "from nova"}]}},
+                "stopReason": "end_turn",
+            }
+
+    fake_boto3 = types.SimpleNamespace(client=lambda *a, **k: FakeBedrock())
+    monkeypatch.setitem(sys.modules, "boto3", fake_boto3)
+    out_of_quota = dict.fromkeys(
+        ["gemini-3.5-flash-lite", "gemini-3.1-flash-lite", "gemini-3.8-flash"], 429
+    )
+    c, _ = _cloud_client(monkeypatch, out_of_quota)
+    c.cloud_fallback_models.append("bedrock/eu.amazon.nova-lite-v1:0")
+
+    assert c.chat("system", "user") == "from nova"
+    assert calls == ["eu.amazon.nova-lite-v1:0"]
+    assert c.last_chat_model == "bedrock/eu.amazon.nova-lite-v1:0"

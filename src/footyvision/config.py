@@ -76,6 +76,10 @@ class Settings(BaseSettings):
     cloud_llm_api_key: str = ""
     gemini_api_key: str = ""
 
+    # "numpy" ranks in memory; "pgvector" ranks in Postgres. Same vectors, same results
+    # up to HNSW's approximation: a switch for comparing the two, not a migration.
+    vector_search: str = "numpy"
+
     @property
     def active_cloud_api_key(self) -> str:
         return (

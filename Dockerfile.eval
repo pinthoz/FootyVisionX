@@ -1,0 +1,10 @@
+# Evaluation and tests on top of the Lambda image: same code, same fine-tuned retriever,
+# plus the test, training and RAGAS dependencies the runtime deliberately leaves out.
+ARG BASE=footyvision-api:vNEXT
+FROM ${BASE}
+RUN apt-get update && apt-get install -y --no-install-recommends libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+# The current pyproject.toml, not the base image's: a dependency added since (pgvector,
+# litellm) would otherwise never be installed.
+COPY pyproject.toml README.md ./
+RUN pip install -e ".[dev,train,eval]" litellm

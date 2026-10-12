@@ -17,6 +17,7 @@ import numpy as np
 
 from footyvision.llm.client import LLMClient
 from footyvision.rag.constraints import Constraints
+from footyvision.config import get_settings
 
 
 @dataclass
@@ -75,6 +76,7 @@ class VectorStore:
         self.names = np.asarray(names, dtype=object)
         self.texts = np.asarray(texts, dtype=object)
         self.vectors = _normalize(np.asarray(vectors, dtype=np.float32))
+        self.db_ids: np.ndarray | None = None
         # Hard attributes kept beside the vectors so retrieval can narrow the pool before
         # ranking it. An index built before these existed simply has none, and every
         # filter then matches everything rather than failing.
@@ -292,6 +294,8 @@ class VectorStore:
         enforce "left-footed", so asking it to rank the whole pool and hoping the
         constraint survives the top-k does not work.
         """
+        if get_settings().vector_search == "pgvector" and self.db_ids is not None:
+            return self._search_pgvector(query_vector, k, mask)
         q = np.asarray(query_vector, dtype=np.float32)
         q = q / (np.linalg.norm(q) or 1.0)
         scores = self.vectors @ q
@@ -308,6 +312,36 @@ class VectorStore:
                 int(i),
             )
             for i in order
+        ]
+
+    def _search_pgvector(self, query_vector, k: int, mask: np.ndarray | None) -> list[Hit]:
+        """The same ranking as `search`, done by Postgres with the `<=>` operator."""
+        from sqlalchemy import text
+
+        from footyvision.db.base import SessionLocal
+
+        q = np.asarray(query_vector, dtype=np.float32)
+        q = q / (np.linalg.norm(q) or 1.0)
+        rows = np.arange(len(self.ids)) if mask is None else np.flatnonzero(mask)
+        if rows.size == 0:
+            return []
+        position = {int(self.db_ids[i]): int(i) for i in rows}
+        # Filtered: an exact search inside the allowed rows. Unfiltered: no WHERE, so
+        # Postgres may answer from the HNSW index.
+        where = "" if mask is None else "WHERE id = ANY(:ids)"
+        sql = text(
+            f"SELECT id, 1 - (embedding <=> CAST(:q AS vector)) AS score "
+            f"FROM player_vectors {where} "
+            f"ORDER BY embedding <=> CAST(:q AS vector) LIMIT :k"
+        )
+        with SessionLocal() as session:
+            found = session.execute(
+                sql, {"q": str(q.tolist()), "ids": list(position), "k": k}
+            ).all()
+        return [
+            Hit(int(self.ids[i]), str(self.names[i]), str(self.texts[i]), float(score), i)
+            for db_id, score in found
+            for i in [position[db_id]]
         ]
 
     def save_db(self, session, embed_model: str) -> int:
@@ -329,6 +363,7 @@ class VectorStore:
                     position_group=self.position_group[i] if self.position_group[i] else None,
                     nationality=self.nationality[i] if self.nationality[i] else None,
                     metrics=json.dumps(self.metrics[i]) if self.metrics[i] else None,
+                    embedding=self.vectors[i].tolist(),
                 )
                 for i in range(len(self.ids))
             ]
@@ -360,6 +395,7 @@ class VectorStore:
                 "metrics": [json.loads(r.metrics) if r.metrics else None for r in rows],
             },
         )
+        store.db_ids = np.asarray([r.id for r in rows])
         return store, rows[0].embed_model
 
     def save(self, path: str | Path) -> None:

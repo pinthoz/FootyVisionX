@@ -11,7 +11,10 @@ from footyvision.db.base import Base
 import footyvision.db.models  # noqa: F401  (import to register all tables on Base.metadata)
 
 config = context.config
-config.set_main_option("sqlalchemy.url", get_settings().sqlalchemy_url)
+# The URL passes through configparser, which reads "%" as the start of an interpolation.
+# A URL-encoded password is full of them (RDS generates passwords with symbols), so each
+# is doubled here and read back as a single "%".
+config.set_main_option("sqlalchemy.url", get_settings().sqlalchemy_url.replace("%", "%%"))
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)

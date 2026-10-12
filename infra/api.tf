@@ -119,7 +119,7 @@ resource "aws_lambda_function" "api" {
       CLOUD_LLM_MODEL = "gemini-3.5-flash-lite"
       # Tried in order when the model above answers 429 (out of quota) or 5xx. Each has
       # its own free daily quota: ~1,040 questions a day across the chain, at no cost.
-      CLOUD_LLM_FALLBACK_MODELS = "gemini-3.1-flash-lite,gemini-3.8-flash,gemini-2.5-flash"
+      CLOUD_LLM_FALLBACK_MODELS = "gemini-3.1-flash-lite,gemini-3.8-flash,gemini-2.5-flash,bedrock/eu.amazon.nova-lite-v1:0"
       # Only a fallback: with FINETUNED_EMBED_PATH set, queries are embedded by the
       # fine-tuned model.
       CLOUD_LLM_EMBED_MODEL = "gemini-embedding-2"
@@ -127,6 +127,7 @@ resource "aws_lambda_function" "api" {
       # The retriever FootyVision runs locally, and the one the stored index was built
       # with: query and index vectors have to come from the same model.
       FINETUNED_EMBED_PATH = "models/embeddinggemma-footyvision"
+      VECTOR_SEARCH = "pgvector"
     }
   }
 
@@ -221,4 +222,24 @@ resource "aws_scheduler_schedule" "warm" {
     role_arn = aws_iam_role.warm.arn
     input    = jsonencode({ source = "footyvision.warm" })
   }
+}
+
+data "aws_caller_identity" "current" {}
+
+# Invoke Nova Lite and nothing else on Bedrock. The eu. inference profile routes each
+# request to a European region, so the model ARN has to allow any region.
+resource "aws_iam_role_policy" "api_bedrock" {
+  name = "invoke-bedrock"
+  role = aws_iam_role.api.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Action = "bedrock:InvokeModel"
+      Resource = [
+        "arn:aws:bedrock:${var.region}:${data.aws_caller_identity.current.account_id}:inference-profile/eu.amazon.nova-lite-v1:0",
+        "arn:aws:bedrock:*::foundation-model/amazon.nova-lite-v1:0",
+      ]
+    }]
+  })
 }

@@ -22,6 +22,8 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from footyvision.db.base import Base
 
+from pgvector.sqlalchemy import Vector
+
 # Counting metrics aggregated from StatsBomb events. Kept as a tuple so the ETL and
 # similarity layers can iterate the canonical metric list without hardcoding it.
 METRIC_COLUMNS: tuple[str, ...] = (
@@ -133,6 +135,9 @@ class PlayerVector(Base):
     text: Mapped[str] = mapped_column(Text)
     # float32 little-endian, straight from numpy. A float array column would be portable
     # but roughly four times the size and slower to reassemble.
+    embedding: Mapped[list[float] | None] = mapped_column(Vector(768), nullable=True)
+    # The same vector, as a pgvector column, so similarity can run in SQL. The bytes
+    # column above stays until this has proven itself: it is the way back.
     vector: Mapped[bytes] = mapped_column(LargeBinary)
     dim: Mapped[int] = mapped_column(Integer)
     embed_model: Mapped[str] = mapped_column(String(200), index=True)

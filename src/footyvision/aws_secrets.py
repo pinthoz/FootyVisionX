@@ -38,9 +38,11 @@ def load() -> None:
         user = quote(secret["username"], safe="")
         password = quote(secret["password"], safe="")  # may hold @, / or :
         host = os.environ["DB_HOST"]
+        # 5432 on Lambda; another port when going through an SSM tunnel from a laptop.
+        port = os.environ.get("DB_PORT", "5432")
         name = os.environ.get("DB_NAME", "footyvision")
         os.environ["DATABASE_URL"] = (
-            f"postgresql+psycopg2://{user}:{password}@{host}:5432/{name}?sslmode=require"
+            f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{name}?sslmode=require"
         )
 
     if gemini_arn and not os.environ.get("GEMINI_API_KEY"):

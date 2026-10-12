@@ -27,6 +27,21 @@ def _to_last_sentence(text: str) -> str:
     return text[: end + 1].strip() if end > 0 else text
 
 
+def _is_retryable(exc: Exception) -> bool:
+    """Out of quota or overloaded: another model, with its own quota, may still answer."""
+    response = getattr(exc, "response", None)
+    if isinstance(response, dict):  # botocore's ClientError keeps its details in a dict
+        code = response.get("Error", {}).get("Code", "")
+        return code in {
+            "ThrottlingException",
+            "ServiceUnavailableException",
+            "ModelNotReadyException",
+            "InternalServerException",
+        }
+    status = getattr(response, "status_code", None)  # an httpx error
+    return status == 429 or (status is not None and status >= 500)
+
+
 class LLMError(RuntimeError):
     """Raised when the LLM endpoint is unreachable or returns an error."""
 
@@ -63,6 +78,8 @@ class LLMClient:
         self.cloud_fallback_models = [
             m.strip() for m in s.cloud_llm_fallback_models.split(",") if m.strip()
         ]
+        # The boto3 Bedrock client, created on the first Bedrock call and reused after.
+        self._bedrock = None
         self.cloud_embed_model = cloud_embed_model or s.cloud_llm_embed_model
         self.cloud_api_key = cloud_api_key or s.active_cloud_api_key
 
@@ -160,6 +177,37 @@ class LLMClient:
             content = _to_last_sentence(content)
         return content
 
+    def _cloud_models(self) -> list[str]:
+        """Cloud models to try, in order. Bedrock needs no key: the IAM role authenticates."""
+        models = [self.cloud_model] + [
+            m for m in self.cloud_fallback_models if m != self.cloud_model
+        ]
+        if not self.cloud_api_key:
+            models = [m for m in models if m.startswith("bedrock/")]
+        return models
+
+    def _post_bedrock(
+        self, model_id: str, system: str, user: str, temperature: float, max_tokens: int
+    ) -> str:
+        """Chat through Amazon Bedrock's Converse API."""
+        # Imported here, not at the top: boto3 is installed in the Lambda image only, and
+        # the app has to import cleanly on a machine without it.
+        import boto3
+
+        if self._bedrock is None:
+            self._bedrock = boto3.client("bedrock-runtime")
+        resp = self._bedrock.converse(
+            modelId=model_id,
+            system=[{"text": system}],
+            messages=[{"role": "user", "content": [{"text": user}]}],
+            inferenceConfig={"temperature": temperature, "maxTokens": max_tokens},
+        )
+        self.last_chat_model = f"bedrock/{model_id}"
+        self.last_truncated = resp.get("stopReason") == "max_tokens"
+        parts = resp["output"]["message"]["content"]
+        text = "".join(p.get("text", "") for p in parts).strip()
+        return _to_last_sentence(text) if self.last_truncated else text
+
     def chat(
         self,
         system: str,
@@ -199,7 +247,7 @@ class LLMClient:
                 httpx.HTTPStatusError,
             ) as exc:
                 local_exc = exc
-                if not self.cloud_api_key:
+                if not self._cloud_models():
                     raise LLMError(
                         f"Local LLM request to {self.base_url} failed ({exc}). "
                         "Is LM Studio / Ollama running?"
@@ -225,14 +273,16 @@ class LLMClient:
             except Exception as exc:
                 local_exc = exc
 
-        if self.cloud_api_key:
+        models = self._cloud_models()
+        if models:
             self.last_embed_model = self.cloud_embed_model
-            models = [self.cloud_model] + [
-                m for m in self.cloud_fallback_models if m != self.cloud_model
-            ]
             cloud_exc: Exception | None = None
             for model in models:
                 try:
+                    if model.startswith("bedrock/"):
+                        return self._post_bedrock(
+                            model.removeprefix("bedrock/"), system, user, temperature, max_tokens
+                        )
                     return self._post_chat(
                         base_url=self.cloud_base_url,
                         model=model,
@@ -247,9 +297,8 @@ class LLMClient:
                     # Out of quota or overloaded: the next model has its own quota and
                     # may answer. Anything else (a bad key, a malformed request) would
                     # fail the same way on every model, so it is raised at once.
-                    status = getattr(getattr(exc, "response", None), "status_code", None)
-                    if status == 429 or (status is not None and status >= 500):
-                        logger.warning("Cloud model %s returned %s; trying the next", model, status)
+                    if _is_retryable(exc):
+                        logger.warning("Cloud model %s failed (%s); trying the next", model, exc)
                         continue
                     break
             raise LLMError(
