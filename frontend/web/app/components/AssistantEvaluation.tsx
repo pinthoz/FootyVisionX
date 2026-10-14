@@ -143,9 +143,9 @@ export default function AssistantEvaluation() {
                     comparing categories against each other is not safe here.
                   </>
                 )}{" "}
-                A model
-                scoring its own family&apos;s output tends to be generous, so read these as
-                a signal across runs rather than an absolute grade. Context precision is
+                The scores move with the judge: grading this assistant with a different
+                model shifted faithfulness by ten points, so read these as a signal across
+                runs with the same judge rather than an absolute grade. Context precision is
                 measured too and deliberately not shown: it has scored 0.00 on questions
                 whose answers quote figures straight out of the retrieved profiles, and
                 swings by a factor of three between judges, while a deterministic check
@@ -220,6 +220,7 @@ const DESCRIPTIONS: Record<string, string> = {
   nationality: "the one attribute known for everyone",
   comparison: "named players",
   metric: "a specific per-90 number",
+  physical: "height",
   "coverage-gap": "answerable only in part",
   "unanswerable-metric": "a number we do not hold",
   "unanswerable-player": "someone never loaded",
